@@ -110,7 +110,6 @@ defmodule MenuPlanner.Accounts do
   end
 
   defp hash_password(changeset) do
-    IO.puts "hashing password"
     case changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: password}} ->
         put_change(changeset, :password_hash, Comeonin.Bcrypt.hashpwsalt(password))
