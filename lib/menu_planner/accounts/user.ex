@@ -4,6 +4,7 @@ defmodule MenuPlanner.Accounts.User do
   schema "accounts_users" do
     field :email, :string
     field :name, :string
+    field :password, :string, virtual: true
     field :password_hash, :string
 
     timestamps()
