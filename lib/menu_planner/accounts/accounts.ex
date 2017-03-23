@@ -104,7 +104,18 @@ defmodule MenuPlanner.Accounts do
 
   defp user_changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:email, :name, :password_hash])
-    |> validate_required([:email, :name, :password_hash])
+    |> cast(attrs, [:email, :name, :password])
+    |> validate_required([:email, :name, :password])
+    |> hash_password
+  end
+
+  defp hash_password(changeset) do
+    IO.puts "hashing password"
+    case changeset do
+      %Ecto.Changeset{valid?: true, changes: %{password: password}} ->
+        put_change(changeset, :password_hash, Comeonin.Bcrypt.hashpwsalt(password))
+      _ ->
+        changeset
+    end
   end
 end
